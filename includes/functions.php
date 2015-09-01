@@ -1,4 +1,8 @@
 <?php
+	function __autoload($class_name) {
+		include(LIB_PATH.strtolower($class_name).".php");
+	}
+	
 	function verify_email($email)
 	{
 		return preg_match('/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/',$email);

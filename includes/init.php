@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/gfa/includes/config.php");
-require_once(LIB_PATH."log.php");
+/*require_once(LIB_PATH."log.php");
 require_once(LIB_PATH."logReadable.php");
 require_once(LIB_PATH."database.php");
 require_once(LIB_PATH."databaseObject.php");
@@ -10,7 +10,8 @@ require_once(LIB_PATH."village.php");
 require_once(LIB_PATH."player.php");
 require_once(LIB_PATH."team.php");
 require_once(LIB_PATH."contract.php");
+require_once(LIB_PATH."loan.php");
 require_once(LIB_PATH."visa.php");
 require_once(LIB_PATH."insurance.php");
-require_once(LIB_PATH."session.php");
+require_once(LIB_PATH."session.php");*/
 require_once(LIB_PATH."functions.php");

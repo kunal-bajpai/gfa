@@ -16,6 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `assocs`
+--
+
+DROP TABLE IF EXISTS `assocs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `assocs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `assocs`
+--
+
+LOCK TABLES `assocs` WRITE;
+/*!40000 ALTER TABLE `assocs` DISABLE KEYS */;
+INSERT INTO `assocs` VALUES (1,'assoc1');
+/*!40000 ALTER TABLE `assocs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `category_key`
 --
 
@@ -92,6 +116,33 @@ INSERT INTO `insurances` VALUES (1,2,1441079755,1441391400);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `loans`
+--
+
+DROP TABLE IF EXISTS `loans`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `loans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `player` int(11) DEFAULT NULL,
+  `start` int(11) DEFAULT NULL,
+  `end` int(11) DEFAULT NULL,
+  `team` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `loans`
+--
+
+LOCK TABLES `loans` WRITE;
+/*!40000 ALTER TABLE `loans` DISABLE KEYS */;
+INSERT INTO `loans` VALUES (1,2,1441045800,1442428200,1);
+/*!40000 ALTER TABLE `loans` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `players`
 --
 
@@ -124,7 +175,7 @@ CREATE TABLE `players` (
 
 LOCK TABLES `players` WRITE;
 /*!40000 ALTER TABLE `players` DISABLE KEYS */;
-INSERT INTO `players` VALUES (1,'123','Kunal','asd','Bajpai','asd','D7, Muthiyan Residency\r\nDeep Nagar','+919423174875','+919423174875','+919423174875','kunalkb20@gmail.com',1,0,1,1440095400),(2,'asd','Kunal','asd','Bajpai','asd','D7, Muthiyan Residency\r\nDeep Nagar','+919423174875','+919423174875','+919423174875','kunalkb20@gmail.com',1,1,1,1441823400);
+INSERT INTO `players` VALUES (1,'123','Kunal','asd','Bajpai','asd','D7, Muthiyan Residency\r\nDeep Nagar','+919423174875','+919423174875','+919423174875','kunalkb20@gmail.com',1,0,1,1440095400),(2,'asd','Kunal','def','Bajpai','asd','D7, Muthiyan Residency\r\nDeep Nagar','+919423174875','+919423174875','+919423174875','kunalkb20@gmail.com',1,1,1,1441823400);
 /*!40000 ALTER TABLE `players` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,6 +201,33 @@ LOCK TABLES `teams` WRITE;
 /*!40000 ALTER TABLE `teams` DISABLE KEYS */;
 INSERT INTO `teams` VALUES (1,'team1');
 /*!40000 ALTER TABLE `teams` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `transfers`
+--
+
+DROP TABLE IF EXISTS `transfers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `transfers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `player` int(11) DEFAULT NULL,
+  `assoc` int(11) DEFAULT NULL,
+  `start` int(11) DEFAULT NULL,
+  `returned` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `transfers`
+--
+
+LOCK TABLES `transfers` WRITE;
+/*!40000 ALTER TABLE `transfers` DISABLE KEYS */;
+INSERT INTO `transfers` VALUES (1,2,1,1441737000,1441105149),(2,2,1,1441737000,1441105670);
+/*!40000 ALTER TABLE `transfers` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -234,4 +312,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-01 10:43:49
+-- Dump completed on 2015-09-01 18:47:34

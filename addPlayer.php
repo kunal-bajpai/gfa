@@ -33,11 +33,11 @@
 		<script type="text/javascript" src="js/jsDatePick.min.1.3.js"></script>
 		<script type="text/javascript">
 			window.onload = function(){
-				new JsDatePick({useMode:2,target:"dob",dateFormat:"%d-%m-%Y"});
-				new JsDatePick({useMode:2,target:"contractFrom",dateFormat:"%d-%m-%Y"});
-				new JsDatePick({useMode:2,target:"contractTo",dateFormat:"%d-%m-%Y"});
-				new JsDatePick({useMode:2,target:"visaTo",dateFormat:"%d-%m-%Y"});
-				new JsDatePick({useMode:2,target:"insTo",dateFormat:"%d-%m-%Y"});
+				new JsDatePick({useMode:2,target:"dob",dateFormat:"%d %M %Y"});
+				new JsDatePick({useMode:2,target:"contractFrom",dateFormat:"%d %M %Y"});
+				new JsDatePick({useMode:2,target:"contractTo",dateFormat:"%d %M %Y"});
+				new JsDatePick({useMode:2,target:"visaTo",dateFormat:"%d %M %Y"});
+				new JsDatePick({useMode:2,target:"insTo",dateFormat:"%d %M %Y"});
 			};
 		</script>
 	</head>

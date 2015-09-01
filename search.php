@@ -48,7 +48,7 @@
 					<p><?php echo $player->mid_name;?></p>
 					<p><?php echo $player->last_name;?></p>
 					<p><?php echo $player->gfa_lic_num;?></p>
-					<p><?php echo strftime("%d-%m-%Y",$player->dob);?></p>
+					<p><?php echo strftime("%d %b %Y",$player->dob);?></p>
 					<a href="playerView.php?id=<?php echo $player->id;?>">View</a>
 				<?php endforeach;?>
 		</div>
