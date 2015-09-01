@@ -9,5 +9,8 @@ require_once(LIB_PATH."user.php");
 require_once(LIB_PATH."village.php");
 require_once(LIB_PATH."player.php");
 require_once(LIB_PATH."team.php");
+require_once(LIB_PATH."contract.php");
+require_once(LIB_PATH."visa.php");
+require_once(LIB_PATH."insurance.php");
 require_once(LIB_PATH."session.php");
 require_once(LIB_PATH."functions.php");
