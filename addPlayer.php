@@ -43,9 +43,10 @@
 	</head>
 	<body>
 		<form method="POST" enctype="multipart/form-data">
-			First Name* <input type="text" name="first_name" required/><br/>
-			Middle Name* <input type="text" name="mid_name" required/><br/>
-			Last Name* <input type="text" name="last_name" required/><br/>
+			First Name* <input type="text" name="first_name" id="first_name" required/><br/>
+			Middle Name* <input type="text" name="mid_name" id="mid_name" required/><br/>
+			Last Name* <input type="text" name="last_name" id="last_name" required/><br/>
+			<div id="similarNames"></div>
 			Photo <input type="file" name="photo" accept="image/*"/><br/>
 			GFA License no.* <input type="text" name="gfa_lic_num" required/><br/>
 			Nationality* <input type="text" name="nat" required/><br/>
@@ -98,7 +99,55 @@
 				document.getElementById("insTo").required = false;
 				document.getElementById("med").required = false;
 			}
-			
 		}
+		function check(){
+			fname = document.getElementById("first_name").value;
+			mname = document.getElementById("mid_name").value;
+			lname = document.getElementById("last_name").value;
+			if(fname!='' && mname!='' && lname!=''){
+				var xhrName = new XMLHttpRequest();
+				xhrName.open("POST","ajax/checkNames.php",true);
+				xhrName.setRequestHeader("content-type","application/x-www-form-urlencoded");
+				xhrName.onreadystatechange = function(){
+					if(this.readyState==4 && this.status==200){
+						var nameDiv = document.getElementById("similarNames");
+						while (nameDiv.firstChild)
+ 							nameDiv.removeChild(nameDiv.firstChild);
+ 						var resp = JSON.parse(this.responseText);
+ 						for(i=0;i<resp.length;i++){
+ 							var newNode = document.createElement("div");
+ 							var p = document.createElement("div");
+ 							p.innerHTML = resp[i].first_name;
+ 							newNode.appendChild(p);
+ 							p = document.createElement("div");
+ 							p.innerHTML = resp[i].mid_name;
+ 							newNode.appendChild(p);
+ 							p = document.createElement("div");
+ 							p.innerHTML = resp[i].last_name;
+ 							newNode.appendChild(p);
+ 							p = document.createElement("div");
+ 							p.innerHTML = resp[i].gfa_lic_num;
+ 							newNode.appendChild(p);
+ 							p = document.createElement("a");
+ 							p.innerHTML = "View";
+ 							p.href = "playerView.php?id="+resp[i].id;
+ 							p.target="__blank";
+ 							newNode.appendChild(p);
+ 							nameDiv.appendChild(newNode);
+ 						}
+					}
+				}
+				var nameDiv = document.getElementById("similarNames");
+				while (nameDiv.firstChild)
+ 					nameDiv.removeChild(nameDiv.firstChild);
+ 				var p = document.createElement("div");
+ 				p.innerHTML = "Checking for similar names...";
+ 				nameDiv.appendChild(p);
+ 				xhrName.send("fname="+fname+"&mname="+mname+"&lname="+lname);
+			}
+		}
+		document.getElementById("first_name").onblur = check;
+		document.getElementById("mid_name").onblur = check;
+		document.getElementById("last_name").onblur = check;
 	</script>
 </html>
