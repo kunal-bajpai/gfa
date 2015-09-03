@@ -88,12 +88,12 @@ if(sizeof($_POST)>0){
 	<body class="skin-blue sidebar-mini">
 		<div class="wrapper">
 
-      	<?php include("header.php"); ?>
+    	<?php include("header.php"); ?>
 
-      	<?php include("sidebar.php"); ?>
+    	<?php include("sidebar.php"); ?>
 
-      <div class="content-wrapper">
-      <section class="content">
+    	<div class="content-wrapper">
+    	<section class="content">
 			<div class="box box-primary">
 				<div class="box-header with-border">
 					<h3 class="box-title">Search Players</h3>
@@ -156,7 +156,7 @@ if(sizeof($_POST)>0){
 				</div>
 			</div>
 
-				<?php if(is_array($players) && count($players)>0) { ?>
+			<?php if(is_array($players) && count($players)>0) { ?>
 
 				<div class="box">
                 <div class="box-header with-border">
@@ -199,24 +199,24 @@ if(sizeof($_POST)>0){
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-              <?php } else if (count($conds)>0) { ?>
+            <?php } else if (count($conds)>0) { ?>
               	<div class="box box-primary">
-                <div class="box-header">
-                  <h3 class="box-title">Search Results</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-					<div class="callout callout-danger">
-                    <h4>No Players Found</h4>
-                    <p>We could not find any players with the current search parameters. Try removing some search parameters.</p>
-                  </div>
+	                <div class="box-header">
+	                  <h3 class="box-title">Search Results</h3>
+	                </div><!-- /.box-header -->
+	                <div class="box-body">
+						<div class="callout callout-danger">
+		                    <h4>No Players Found</h4>
+		                    <p>We could not find any players with the current search parameters. Try removing some search parameters.</p>
+	                  	</div>
+	                </div>
                 </div>
-                </div>
-              <?php	} ?>
+            <?php } ?>
 		</section>
 		</div>
 
-      <?php include("footer.php"); ?>
+    	<?php include("footer.php"); ?>
 
-    </div><!-- ./wrapper -->
+    	</div><!-- ./wrapper -->
 	</body>
 </html>

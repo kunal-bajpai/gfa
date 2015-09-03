@@ -152,283 +152,281 @@ if(isset($_GET['id'])) {
 									else
 										if(isset($loanedTo[0])) 
 											echo "On loan to ".$loanedTo[0]->name;?></dd>
-										<dt>Telephone (residence)</dt>
-										<dd><?php echo $player->ph_res;?></dd>
-										<dt>Telephone (office)</dt>
-										<dd><?php echo $player->ph_off;?></dd>
-										<dt>Mobile number</dt>
-										<dd><?php echo $player->mob;?></dd>
-										<dt>Email</dt>
-										<dd><?php echo $player->email;?></dd>
-										<dt>Category</dt>
-										<dd><?php echo ($player->category==1)?"Non-amateur":"Amateur";?></dd>
-									</dl>
+								<dt>Telephone (residence)</dt>
+								<dd><?php echo $player->ph_res;?></dd>
+								<dt>Telephone (office)</dt>
+								<dd><?php echo $player->ph_off;?></dd>
+								<dt>Mobile number</dt>
+								<dd><?php echo $player->mob;?></dd>
+								<dt>Email</dt>
+								<dd><?php echo $player->email;?></dd>
+								<dt>Category</dt>
+								<dd><?php echo ($player->category==1)?"Non-amateur":"Amateur";?></dd>
+							</dl>
 
-								</div>
-							</div>
+						</div>
+					</div>
 
-							<div class="box box-primary">
-								<div class="box-header with-border">
-									<h3 class="box-title">Contract History</h3>
-								</div>
-								<div class="box-body">
-									<?php if($player->category==1):?>
-										<div id="contHistory">
-											<table id="example2" class="table table-bordered table-hover">
-												<thead>
-													<tr>
-														<th>Team</th>
-														<th>Start Date</th>
-														<th>End Date</th>
-														<th>Status</th>
-													</tr>
-												</thead>
-												<tbody>
-
-													<?php if(is_array($contracts))
-													foreach($contracts as $contract):?>
-													<tr>
-														<td>TODO:TEAM</td>
-														<td><?php echo strftime("%d %b %Y",$contract->date_of_reg);?></td>
-														<td><?php echo strftime("%d %b %Y",$contract->expiry);?></td>
-														<td><?php echo ($contract->term==1)?"Terminated":NULL;?></td>
-													</tr>
-												<?php endforeach;?>
-											</tbody>
-										</table>
-									</div>
-
-								</div>
-							</div>
-
-							<div class="form-group">
-								<form method="POST">
-									<input type="hidden" name="term_current" class="form-control" value="1"/>
-									<input class="btn btn-danger" type="submit" value="Terminate current contract" />
-								</form>
-							</div>
-
-							<div class="box box-primary">
-								<div class="box-header with-border">
-									<h3 class="box-title">New Contract</h3>
-								</div>
-								<div class="box-body">
-									<form method="POST">
-										<div class="form-group col-md-6">
-											<label>Start Date</label>
-											<input type="text" class="form-control" name="contFrom" id="contFrom" />
-										</div>
-										<div class="form-group col-md-6">
-											<label>End Date</label>
-											<input type="text" class="form-control" name="contTo" id="contTo" />
-										</div>
-										<input type="submit" class="btn btn-primary" value="Add contract" />
-									</form>
-								</div>
-							</div>
-
-							<div class="box box-primary">
-								<div class="box-header with-border">
-									<h3 class="box-title">Insurance History</h3>
-								</div>
-								<div class="box-body">
-									<div id="insHistory">
-										<table id="example2" class="table table-bordered table-hover">
-											<thead>
-												<tr>
-													<th>Added On</th>
-													<th>Expiry Date</th>
-												</tr>
-											</thead>
-											<tbody>
-												<?php if(is_array($contracts)) foreach($insurances as $insurance):?>
-												<tr>
-													<td><?php echo strftime("%d %b %Y",$insurance->added_on);?></td>
-													<td><?php echo strftime("%d %b %Y",$insurance->expiry);?></td>
-												</tr>
-											<?php endforeach;?>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-
-							<div class="box box-primary">
-								<div class="box-header with-border">
-									<h3 class="box-title">New Insurance</h3>
-								</div>
-								<div class="box-body">
-									<form method="POST">
-										<div class="form-group">
-											<label>Expiry</label>
-											<input type="text" class="form-control" name="insTo" id="insTo" />
-										</div>
-										<input type="submit" class="btn btn-primary" value="Add Insurance" />
-									</form>
-								</div>
-							</div>
-
-							<div class="box box-primary">
-								<div class="box-header with-border">
-									<h3 class="box-title">Visa History</h3>
-								</div>
-								<div class="box-body">
-									<div id="visaHistory">
-										<table id="example2" class="table table-bordered table-hover">
-											<thead>
-												<th>Added On</th>
-												<th>Expiry Date</th>
-											</thead>
-											<tbody>
-											<?php if(is_array($visas))
-											foreach($visas as $visa):?>
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Contract History</h3>
+						</div>
+						<div class="box-body">
+							<?php if($player->category==1):?>
+								<div id="contHistory">
+									<table id="example2" class="table table-bordered table-hover">
+										<thead>
 											<tr>
-											<td><?php echo strftime("%d %b %Y",$visa->added_on);?></td>
-											<td><?php echo strftime("%d %b %Y",$visa->expiry);?></td>
-											</tr>
-											<?php endforeach;?>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-
-							<div class="box box-primary">
-								<div class="box-header with-border">
-									<h3 class="box-title">Add Visa</h3>
-								</div>
-								<div class="box-body">
-									<form method="POST">
-										<div class="form-group" >
-											<label>Expiry</label>
-											<input type="text" class="form-control" name="visaTo" id="visaTo" /><br/>
-											<input type="submit" class="btn btn-primary" value="Add Visa" />
-										</div>
-									</form>
-								</div>
-							</div>
-
-							<div class="box box-primary">
-								<div class="box-header with-border">
-									<h3 class="box-title">Loan History</h3>
-								</div>
-								<div class="box-body">
-									<div id="loanHistory">
-										<table id="example2" class="table table-bordered table-hover">
-											<thead>
 												<th>Team</th>
 												<th>Start Date</th>
 												<th>End Date</th>
-											</thead>
-											<tbody>
-											<?php if(is_array($loans))
-											foreach($loans as $loan):?>
+												<th>Status</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											<?php if(is_array($contracts))
+											foreach($contracts as $contract):?>
 											<tr>
-												<td><?php echo Team::find_by_id($loan->team)->name;?></td>
-												<td><?php echo strftime("%d %b %Y",$loan->start);?></td>
-												<td><?php echo strftime("%d %b %Y",$loan->end);?></td>
+												<td>TODO:TEAM</td>
+												<td><?php echo strftime("%d %b %Y",$contract->date_of_reg);?></td>
+												<td><?php echo strftime("%d %b %Y",$contract->expiry);?></td>
+												<td><?php echo ($contract->term==1)?"Terminated":NULL;?></td>
 											</tr>
 											<?php endforeach;?>
-											</tbody>
-										</table>
-									</div>
+										</tbody>
+									</table>
 								</div>
-							</div>
-
-							<div class="box box-primary">
-								<div class="box-header with-border">
-									<h3 class="box-title">Add Loan</h3>
-								</div>
-								<div class="box-body">
-									<form method="POST">
-										<div class="form-group">
-											<label>Team</label>
-											<select class="form-control" name="team">
-											<?php if(is_array($teams))
-											foreach($teams as $team): ?>
-											<option value="<?php echo $team->id;?>"><?php echo $team->name;?> </option>
-										<?php endforeach;?>
-											</select>
-										</div>
-										<div class="form-group col-md-6">
-											<label>Start date</label>
-											<input type="text" name="loanFrom" id="loanFrom" class="form-control" />
-										</div>
-										<div class="form-group col-md-6">
-											<label>End date</label>
-											<input type="text" name="loanTo" id="loanTo" class="form-control"/>
-										</div>
-								 
-										<input type="submit" value="Add Loan" class="btn btn-primary" />
-									</form>
-								</div>
-							</div>
-
-							<div class="box box-primary">
-								<div class="box-header with-border">
-									<h3 class="box-title">Association Transfer History</h3>
-								</div>
-								<div class="box-body">
-									<div id="transHistory">
-										<table id="example2" class="table table-bordered table-hover">
-											<thead>
-												<th>Association</th>
-												<th>Start Date</th>
-												<th>End Date</th>
-											</thead>
-											<tbody>
-											<?php if(is_array($transfers))
-											foreach($transfers as $transfer):?>
-											<tr>
-												<td><?php echo Assoc::find_by_id($transfer->assoc)->name;?></td>
-												<td><?php echo strftime("%d %b %Y",$transfer->start);?></td>
-												<td><?php if($transfer->returned==0)
-														echo "Not returned";
-														else
-															echo strftime("%d %b %Y",$transfer->returned);?></td>
-											</tr>
-											<?php endforeach;?>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<form method="POST">
-									<input type="hidden" name="return_transfer" class="form-control" value="1"/>
-									<input class="btn btn-warning" type="submit" value="Return from transfer" />
-								</form>
-							</div>
-
-							<div class="box box-primary">
-								<div class="box-header with-border">
-									<h3 class="box-title">Add Transfer</h3>
-								</div>
-								<div class="box-body">
-									<form method="POST">
-										<div class="form-group">
-											<label>Association</label>
-											<select name="assoc" class="form-control">
-											<?php if(is_array($assocs))
-											foreach($assocs as $assoc): ?>
-											<option value="<?php echo $assoc->id;?>"><?php echo $assoc->name;?> </option>
-											<?php endforeach;?>
-											</select><br/>
-										</div>
-										<div class="form-group">
-											<label>Start Date</label>
-											<input type="text" class="form-control" name="transFrom" id="transFrom" /><br/>
-										</div>
-										<input type="submit" value="Add Transfer" class="btn btn-primary"/>
-									</form>
-								</div>
-							</div>
-							<?php endif;?>
+							<?php endif; ?>
 						</div>
+					</div>
+
+					<div class="form-group">
+						<form method="POST">
+							<input type="hidden" name="term_current" class="form-control" value="1"/>
+							<input class="btn btn-danger" type="submit" value="Terminate current contract" />
+						</form>
+					</div>
+
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">New Contract</h3>
+						</div>
+						<div class="box-body">
+							<form method="POST">
+								<div class="form-group col-md-6">
+									<label>Start Date</label>
+									<input type="text" class="form-control" name="contFrom" id="contFrom" />
+								</div>
+								<div class="form-group col-md-6">
+									<label>End Date</label>
+									<input type="text" class="form-control" name="contTo" id="contTo" />
+								</div>
+								<input type="submit" class="btn btn-primary" value="Add contract" />
+							</form>
+						</div>
+					</div>
+
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Insurance History</h3>
+						</div>
+						<div class="box-body">
+							<div id="insHistory">
+								<table id="example2" class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th>Added On</th>
+											<th>Expiry Date</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php if(is_array($contracts)) foreach($insurances as $insurance):?>
+										<tr>
+											<td><?php echo strftime("%d %b %Y",$insurance->added_on);?></td>
+											<td><?php echo strftime("%d %b %Y",$insurance->expiry);?></td>
+										</tr>
+									<?php endforeach;?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">New Insurance</h3>
+						</div>
+						<div class="box-body">
+							<form method="POST">
+								<div class="form-group">
+									<label>Expiry</label>
+									<input type="text" class="form-control" name="insTo" id="insTo" />
+								</div>
+								<input type="submit" class="btn btn-primary" value="Add Insurance" />
+							</form>
+						</div>
+					</div>
+
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Visa History</h3>
+						</div>
+						<div class="box-body">
+							<div id="visaHistory">
+								<table id="example2" class="table table-bordered table-hover">
+									<thead>
+										<th>Added On</th>
+										<th>Expiry Date</th>
+									</thead>
+									<tbody>
+									<?php if(is_array($visas))
+									foreach($visas as $visa):?>
+									<tr>
+									<td><?php echo strftime("%d %b %Y",$visa->added_on);?></td>
+									<td><?php echo strftime("%d %b %Y",$visa->expiry);?></td>
+									</tr>
+									<?php endforeach;?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Add Visa</h3>
+						</div>
+						<div class="box-body">
+							<form method="POST">
+								<div class="form-group" >
+									<label>Expiry</label>
+									<input type="text" class="form-control" name="visaTo" id="visaTo" /><br/>
+									<input type="submit" class="btn btn-primary" value="Add Visa" />
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Loan History</h3>
+						</div>
+						<div class="box-body">
+							<div id="loanHistory">
+								<table id="example2" class="table table-bordered table-hover">
+									<thead>
+										<th>Team</th>
+										<th>Start Date</th>
+										<th>End Date</th>
+									</thead>
+									<tbody>
+									<?php if(is_array($loans))
+									foreach($loans as $loan):?>
+									<tr>
+										<td><?php echo Team::find_by_id($loan->team)->name;?></td>
+										<td><?php echo strftime("%d %b %Y",$loan->start);?></td>
+										<td><?php echo strftime("%d %b %Y",$loan->end);?></td>
+									</tr>
+									<?php endforeach;?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Add Loan</h3>
+						</div>
+						<div class="box-body">
+							<form method="POST">
+								<div class="form-group">
+									<label>Team</label>
+									<select class="form-control" name="team">
+									<?php if(is_array($teams))
+									foreach($teams as $team): ?>
+									<option value="<?php echo $team->id;?>"><?php echo $team->name;?> </option>
+								<?php endforeach;?>
+									</select>
+								</div>
+								<div class="form-group col-md-6">
+									<label>Start date</label>
+									<input type="text" name="loanFrom" id="loanFrom" class="form-control" />
+								</div>
+								<div class="form-group col-md-6">
+									<label>End date</label>
+									<input type="text" name="loanTo" id="loanTo" class="form-control"/>
+								</div>
+						 
+								<input type="submit" value="Add Loan" class="btn btn-primary" />
+							</form>
+						</div>
+					</div>
+
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Association Transfer History</h3>
+						</div>
+						<div class="box-body">
+							<div id="transHistory">
+								<table id="example2" class="table table-bordered table-hover">
+									<thead>
+										<th>Association</th>
+										<th>Start Date</th>
+										<th>End Date</th>
+									</thead>
+									<tbody>
+									<?php if(is_array($transfers))
+									foreach($transfers as $transfer):?>
+									<tr>
+										<td><?php echo Assoc::find_by_id($transfer->assoc)->name;?></td>
+										<td><?php echo strftime("%d %b %Y",$transfer->start);?></td>
+										<td><?php if($transfer->returned==0)
+												echo "Not returned";
+												else
+													echo strftime("%d %b %Y",$transfer->returned);?></td>
+									</tr>
+									<?php endforeach;?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<form method="POST">
+							<input type="hidden" name="return_transfer" class="form-control" value="1"/>
+							<input class="btn btn-warning" type="submit" value="Return from transfer" />
+						</form>
+					</div>
+
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Add Transfer</h3>
+						</div>
+						<div class="box-body">
+							<form method="POST">
+								<div class="form-group">
+									<label>Association</label>
+									<select name="assoc" class="form-control">
+									<?php if(is_array($assocs))
+									foreach($assocs as $assoc): ?>
+									<option value="<?php echo $assoc->id;?>"><?php echo $assoc->name;?> </option>
+									<?php endforeach;?>
+									</select><br/>
+								</div>
+								<div class="form-group">
+									<label>Start Date</label>
+									<input type="text" class="form-control" name="transFrom" id="transFrom" /><br/>
+								</div>
+								<input type="submit" value="Add Transfer" class="btn btn-primary"/>
+							</form>
+						</div>
+					</div>
 				</section>
-				<?php include("footer.php"); ?>
 			</div>
+			<?php include("footer.php"); ?>
 		</div>
 	</body>
 </html>
