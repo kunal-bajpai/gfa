@@ -21,7 +21,7 @@ if(sizeof($_POST)>0){
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>AdminLTE 2 | Search</title>
+	<title>GFA | Search</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.4 -->
@@ -154,11 +154,12 @@ if(sizeof($_POST)>0){
 						</div>
 					</form>
 				</div>
+			</div>
 
 				<?php if(is_array($players) && count($players)>0) { ?>
 
 				<div class="box">
-                <div class="box-header">
+                <div class="box-header with-border">
                   <h3 class="box-title">Search Results</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
@@ -199,7 +200,7 @@ if(sizeof($_POST)>0){
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
               <?php } else if (count($conds)>0) { ?>
-              	<div class="box">
+              	<div class="box box-primary">
                 <div class="box-header">
                   <h3 class="box-title">Search Results</h3>
                 </div><!-- /.box-header -->
@@ -211,7 +212,6 @@ if(sizeof($_POST)>0){
                 </div>
                 </div>
               <?php	} ?>
-			</div>
 		</section>
 		</div>
 

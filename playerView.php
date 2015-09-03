@@ -112,7 +112,8 @@ if(isset($_GET['id'])) {
 	</head>
 	<body class="skin-blue sidebar-mini">
 		<div class="wrapper">
-			<?php include ("header.php"); include ("sidebar.php"); ?>
+			<?php include ("header.php"); ?>
+			<?php include ("sidebar.php"); ?>
 			<div class="content-wrapper">
 				<section class="content">
 					<div class="box box-primary" >
@@ -423,11 +424,11 @@ if(isset($_GET['id'])) {
 									</form>
 								</div>
 							</div>
-						<?php endif;?>
-					</div>
-				</div>
-			</section>
+							<?php endif;?>
+						</div>
+				</section>
+				<?php include("footer.php"); ?>
+			</div>
 		</div>
-	</div>
-</body>
+	</body>
 </html>
