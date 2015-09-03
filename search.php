@@ -32,6 +32,8 @@ if(sizeof($_POST)>0){
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	<!-- jvectormap -->
     <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+
+    <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
 	<!-- Theme style -->
 	<link rel="stylesheet" href="dist/css/AdminLTE.min.css">
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -40,11 +42,6 @@ if(sizeof($_POST)>0){
 
 	<link rel="stylesheet" type="text/css" media="all" href="jsDatePick_ltr.min.css" />
 	<script type="text/javascript" src="js/jsDatePick.min.1.3.js"></script>
-	<script type="text/javascript">
-		window.onload = function(){
-			new JsDatePick({useMode:2,target:"dob",dateFormat:"%d %M %Y"});
-		};
-	</script>
 
     <!-- jQuery 2.1.4 -->
     <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
@@ -52,6 +49,7 @@ if(sizeof($_POST)>0){
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <!-- FastClick -->
     <script src="plugins/fastclick/fastclick.min.js"></script>
+    <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/app.min.js"></script>
     <!-- Sparkline -->
@@ -67,6 +65,17 @@ if(sizeof($_POST)>0){
     <script src="dist/js/pages/dashboard2.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
+
+    <script type="text/javascript">
+		window.onload = function(){
+			// new JsDatePick({useMode:2,target:"dob",dateFormat:"%d %M %Y"});
+			// $('#dob').daterangepicker();
+		};
+
+		$(function () {
+	        $("#dob").datepicker();
+    	});
+	</script>
 
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

@@ -334,50 +334,100 @@ if(isset($_GET['id'])) {
 								</div>
 							</div>
 
-				<form method="POST">
-					New Loan<br/>
-					Team <select name="team">
-					<?php if(is_array($teams))
-					foreach($teams as $team): ?>
-					<option value="<?php echo $team->id;?>"><?php echo $team->name;?> </option>
-				<?php endforeach;?>
-			</select><br/>
-			Start date <input type="text" name="loanFrom" id="loanFrom" /><br/>
-			End date <input type="text" name="loanTo" id="loanTo" /><br/>
-			<input type="submit" value="Add Loan" />
-		</form>
+							<div class="box box-primary">
+								<div class="box-header with-border">
+									<h3 class="box-title">Add Loan</h3>
+								</div>
+								<div class="box-body">
+									<form method="POST">
+										<div class="form-group">
+											<label>Team</label>
+											<select class="form-control" name="team">
+											<?php if(is_array($teams))
+											foreach($teams as $team): ?>
+											<option value="<?php echo $team->id;?>"><?php echo $team->name;?> </option>
+										<?php endforeach;?>
+											</select>
+										</div>
+										<div class="form-group col-md-6">
+											<label>Start date</label>
+											<input type="text" name="loanFrom" id="loanFrom" class="form-control" />
+										</div>
+										<div class="form-group col-md-6">
+											<label>End date</label>
+											<input type="text" name="loanTo" id="loanTo" class="form-control"/>
+										</div>
+								 
+										<input type="submit" value="Add Loan" class="btn btn-primary" />
+									</form>
+								</div>
+							</div>
 
-		<div id="transHistory">
-			<?php if(is_array($transfers))
-			foreach($transfers as $transfer):?>
-			<p><?php echo Assoc::find_by_id($transfer->assoc)->name;?></p>
-			<p><?php echo strftime("%d %b %Y",$transfer->start);?></p>
-			<p><?php if($transfer->returned==0)
-				echo "Not returned";
-				else
-					echo strftime("%d %b %Y",$transfer->returned);?></p>
-			<?php endforeach;?>
+							<div class="box box-primary">
+								<div class="box-header with-border">
+									<h3 class="box-title">Association Transfer History</h3>
+								</div>
+								<div class="box-body">
+									<div id="transHistory">
+										<table id="example2" class="table table-bordered table-hover">
+											<thead>
+												<th>Association</th>
+												<th>Start Date</th>
+												<th>End Date</th>
+											</thead>
+											<tbody>
+											<?php if(is_array($transfers))
+											foreach($transfers as $transfer):?>
+											<tr>
+												<td><?php echo Assoc::find_by_id($transfer->assoc)->name;?></td>
+												<td><?php echo strftime("%d %b %Y",$transfer->start);?></td>
+												<td><?php if($transfer->returned==0)
+														echo "Not returned";
+														else
+															echo strftime("%d %b %Y",$transfer->returned);?></td>
+											</tr>
+											<?php endforeach;?>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<form method="POST">
+									<input type="hidden" name="return_transfer" class="form-control" value="1"/>
+									<input class="btn btn-warning" type="submit" value="Return from transfer" />
+								</form>
+							</div>
+
+							<div class="box box-primary">
+								<div class="box-header with-border">
+									<h3 class="box-title">Add Transfer</h3>
+								</div>
+								<div class="box-body">
+									<form method="POST">
+										<div class="form-group">
+											<label>Association</label>
+											<select name="assoc" class="form-control">
+											<?php if(is_array($assocs))
+											foreach($assocs as $assoc): ?>
+											<option value="<?php echo $assoc->id;?>"><?php echo $assoc->name;?> </option>
+											<?php endforeach;?>
+											</select><br/>
+										</div>
+										<div class="form-group">
+											<label>Start Date</label>
+											<input type="text" class="form-control" name="transFrom" id="transFrom" /><br/>
+										</div>
+										<input type="submit" value="Add Transfer" class="btn btn-primary"/>
+									</form>
+								</div>
+							</div>
+						<?php endif;?>
+					</div>
+				</div>
+			</section>
 		</div>
-		<form method="POST">
-			<input type="hidden" name="return_transfer" value="1"/>
-			<input type="submit" value="Return from transfer" />
-		</form>
-		<form method="POST">
-			New Transfer<br/>
-			Association <select name="assoc">
-			<?php if(is_array($assocs))
-			foreach($assocs as $assoc): ?>
-			<option value="<?php echo $assoc->id;?>"><?php echo $assoc->name;?> </option>
-		<?php endforeach;?>
-	</select><br/>
-	Start date <input type="text" name="transFrom" id="transFrom" /><br/>
-	<input type="submit" value="Add Transfer" />
-</form>
-<?php endif;?>
-</div>
-</div>
-</section>
-</div>
-</div>
+	</div>
 </body>
 </html>
