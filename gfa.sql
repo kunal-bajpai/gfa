@@ -75,6 +75,7 @@ CREATE TABLE `contracts` (
   `date_of_reg` int(11) DEFAULT NULL,
   `expiry` int(11) DEFAULT NULL,
   `term` int(11) DEFAULT '0',
+  `team` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -85,7 +86,7 @@ CREATE TABLE `contracts` (
 
 LOCK TABLES `contracts` WRITE;
 /*!40000 ALTER TABLE `contracts` DISABLE KEYS */;
-INSERT INTO `contracts` VALUES (1,2,1441218600,1441996200,1),(2,2,4,10,0),(3,2,4,20,0),(4,2,1442601000,1442687400,1);
+INSERT INTO `contracts` VALUES (1,2,1441391400,1442514600,1,1),(2,2,1441305000,1442514600,1,1),(3,2,1441305000,1442082600,1,1),(4,2,0,0,0,1);
 /*!40000 ALTER TABLE `contracts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,9 +128,10 @@ CREATE TABLE `loans` (
   `player` int(11) DEFAULT NULL,
   `start` int(11) DEFAULT NULL,
   `end` int(11) DEFAULT NULL,
-  `team` int(11) DEFAULT NULL,
+  `fromteam` int(11) DEFAULT NULL,
+  `toteam` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,7 +140,6 @@ CREATE TABLE `loans` (
 
 LOCK TABLES `loans` WRITE;
 /*!40000 ALTER TABLE `loans` DISABLE KEYS */;
-INSERT INTO `loans` VALUES (1,2,1441045800,1442428200,1);
 /*!40000 ALTER TABLE `loans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,7 +162,6 @@ CREATE TABLE `players` (
   `ph_off` varchar(15) DEFAULT NULL,
   `mob` varchar(15) DEFAULT NULL,
   `email` varchar(30) DEFAULT NULL,
-  `team` int(11) DEFAULT NULL,
   `category` int(11) DEFAULT NULL,
   `village` int(11) DEFAULT NULL,
   `dob` int(11) DEFAULT NULL,
@@ -175,7 +175,7 @@ CREATE TABLE `players` (
 
 LOCK TABLES `players` WRITE;
 /*!40000 ALTER TABLE `players` DISABLE KEYS */;
-INSERT INTO `players` VALUES (1,'123','Kunal','asd','Bajpai','asd','D7, Muthiyan Residency\r\nDeep Nagar','+919423174875','+919423174875','+919423174875','kunalkb20@gmail.com',1,0,1,1440095400),(2,'asd','Kunal','def','Bajpai','asd','D7, Muthiyan Residency\r\nDeep Nagar','+919423174875','+919423174875','+919423174875','kunalkb20@gmail.com',1,1,1,1441823400);
+INSERT INTO `players` VALUES (1,'123','Kunal','asd','Bajpai','asd','D7, Muthiyan Residency\r\nDeep Nagar','+919423174875','+919423174875','+919423174875','kunalkb20@gmail.com',0,1,1440095400),(2,'asd','Kunal','def','Bajpai','asd','D7, Muthiyan Residency\r\nDeep Nagar','+919423174875','+919423174875','+919423174875','kunalkb20@gmail.com',1,1,1441823400);
 /*!40000 ALTER TABLE `players` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,4 +312,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-01 18:47:34
+-- Dump completed on 2015-09-12 17:35:57
