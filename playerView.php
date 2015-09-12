@@ -295,6 +295,65 @@ if(isset($_GET['id'])) {
 
 					<div class="box box-primary">
 						<div class="box-header with-border">
+							<h3 class="box-title">Loan History</h3>
+						</div>
+						<div class="box-body">
+							<div id="loanHistory">
+								<table id="example2" class="table table-bordered table-hover">
+									<thead>
+										<th>From Team</th>
+										<th>To Team</th>
+										<th>Start Date</th>
+										<th>End Date</th>
+									</thead>
+									<tbody>
+									<?php if(is_array($loans))
+									foreach($loans as $loan):?>
+									<tr>
+										<td><?php echo Team::find_by_id($loan->fromteam)->name;?></td>
+										<td><?php echo Team::find_by_id($loan->toteam)->name;?></td>
+										<td><?php echo strftime("%d %b %Y",$loan->start);?></td>
+										<td><?php echo strftime("%d %b %Y",$loan->end);?></td>
+									</tr>
+									<?php endforeach;?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<?php if(isset($contractTeam) && !isset($loanTeam)):?>
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Add Loan</h3>
+						</div>
+						<div class="box-body">
+							<form method="POST">
+								<div class="form-group">
+									<label>To Team</label>
+									<select class="form-control" name="toteam">
+									<?php if(is_array($teams))
+									foreach($teams as $team): ?>
+									<option value="<?php echo $team->id;?>"><?php echo $team->name;?> </option>
+								<?php endforeach;?>
+									</select>
+								</div>
+								<div class="form-group col-md-6">
+									<label>Start date</label>
+									<input type="text" name="loanFrom" id="loanFrom" class="form-control" />
+								</div>
+								<div class="form-group col-md-6">
+									<label>End date</label>
+									<input type="text" name="loanTo" id="loanTo" class="form-control"/>
+								</div>
+						 
+								<input type="submit" value="Add Loan" class="btn btn-primary" />
+							</form>
+						</div>
+					</div>
+					<?php endif;?>
+
+					<div class="box box-primary">
+						<div class="box-header with-border">
 							<h3 class="box-title">Insurance History</h3>
 						</div>
 						<div class="box-body">
