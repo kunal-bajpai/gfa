@@ -1,7 +1,6 @@
 <?php
 	require_once("includes/init.php");
 	$villages = Village::find_all();
-	$teams = Team::find_all();
 	if(sizeof($_POST)>0){
 		$player = new Player();
 		$player->get_values();
@@ -41,14 +40,6 @@
 					foreach($villages as $village): ?>
 						<option value="<?php echo $village->id;?>" <?php if($player->village==$village->id) echo "selected";?>>
 							<?php echo $village->name;?>
-						</option>
-					<?php endforeach;?>
-			</select><br/>
-			Team* <select name="team">
-			<?php if(is_array($teams))
-					foreach($teams as $team): ?>
-						<option value="<?php echo $team->id;?>" <?php if($player->team==$team->id) echo "selected";?>>
-							<?php echo $team->name;?> 
 						</option>
 					<?php endforeach;?>
 			</select><br/>

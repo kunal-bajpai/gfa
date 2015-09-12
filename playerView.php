@@ -1,6 +1,7 @@
 <?php
 require_once("includes/init.php");
 if(isset($_GET['id'])) {
+	$player = Player::find_by_id($_GET['id']);
 	if(isset($_POST['term_current'])){
 		$cont = Contract::find_by_sql("SELECT * FROM contracts WHERE player = {$_GET['id']} AND expiry>".time()." AND term = 0 ORDER BY date_of_reg DESC");
 		if(isset($cont[0])){
@@ -17,12 +18,13 @@ if(isset($_GET['id'])) {
 	}
 	if(isset($_POST['contFrom']) && isset($_POST['contTo'])){
 		$newCont = new Contract();
-		$newCont->set($_GET['id'], strtotime($_POST['contFrom']), strtotime($_POST['contTo']));
+		$newCont->set($_GET['id'], $_POST['team'], strtotime($_POST['contFrom']), strtotime($_POST['contTo']));
 		$newCont->save();
 	}
 	if(isset($_POST['loanFrom']) && isset($_POST['loanTo'])){
+		$contractTeam = $player->find_contract_team();
 		$newLoan = new Loan();
-		$newLoan->set($_GET['id'], $_POST['team'], strtotime($_POST['loanFrom']), strtotime($_POST['loanTo']));
+		$newLoan->set($_GET['id'], $contractTeam->id, $_POST['toteam'], strtotime($_POST['loanFrom']), strtotime($_POST['loanTo']));
 		$newLoan->save();
 	}
 	if(isset($_POST['insTo'])){
@@ -42,14 +44,14 @@ if(isset($_GET['id'])) {
 	}
 	$teams = Team::find_all();
 	$assocs = Assoc::find_all();
-	$player = Player::find_by_id($_GET['id']);
 	if($player->category==1) {
 		$contracts = Contract::find_by_sql("SELECT * FROM contracts WHERE player={$player->id} ORDER BY date_of_reg ASC");
 		$insurances = Insurance::find_by_sql("SELECT * FROM insurances WHERE player={$player->id} ORDER BY added_on ASC");
 		$visas = Visa::find_by_sql("SELECT * FROM visas WHERE player={$player->id} ORDER BY added_on ASC");
 		$loans = Loan::find_by_sql("SELECT * FROM loans WHERE player={$player->id} ORDER BY start ASC");
 		$transfers = Transfer::find_by_sql("SELECT * FROM transfers WHERE player={$player->id} ORDER BY start ASC");
-		$loanedTo = Team::find_by_sql("SELECT * FROM teams WHERE id = (SELECT team FROM loans WHERE player = {$_GET['id']} AND end > ".time().")");
+		$contractTeam = $player->find_contract_team();
+		$currentTeam = $player->find_current_team();
 		$transTo = Assoc::find_by_sql("SELECT * FROM assocs WHERE id = (SELECT assoc FROM transfers WHERE player = {$_GET['id']} AND returned = 0)");
 	}
 }
@@ -145,13 +147,7 @@ if(isset($_GET['id'])) {
 								<dt>Village</dt>
 								<dd><?php echo Village::find_by_id($player->village)->name;?></dd>
 								<dt>Team</dt>
-								<dd><?php echo Team::find_by_id($player->team)->name;?></dd>
-								<dt>Status</dt>
-								<dd><?php if(isset($transTo[0]))
-									echo "Transfered to ".$transTo[0]->name;
-									else
-										if(isset($loanedTo[0])) 
-											echo "On loan to ".$loanedTo[0]->name;?></dd>
+								<dd><?php if(isset($currentTeam)) echo $currentTeam->name;?></dd>
 								<dt>Telephone (residence)</dt>
 								<dd><?php echo $player->ph_res;?></dd>
 								<dt>Telephone (office)</dt>
@@ -188,7 +184,7 @@ if(isset($_GET['id'])) {
 											<?php if(is_array($contracts))
 											foreach($contracts as $contract):?>
 											<tr>
-												<td>TODO:TEAM</td>
+												<td><?php echo Team::find_by_id($contract->team)->name;?></td>
 												<td><?php echo strftime("%d %b %Y",$contract->date_of_reg);?></td>
 												<td><?php echo strftime("%d %b %Y",$contract->expiry);?></td>
 												<td><?php echo ($contract->term==1)?"Terminated":NULL;?></td>
@@ -214,6 +210,15 @@ if(isset($_GET['id'])) {
 						</div>
 						<div class="box-body">
 							<form method="POST">
+								<div class="form-group">
+									<label>Team</label>
+									<select class="form-control" name="team">
+									<?php if(is_array($teams))
+									foreach($teams as $team): ?>
+									<option value="<?php echo $team->id;?>"><?php echo $team->name;?> </option>
+								<?php endforeach;?>
+									</select>
+								</div>
 								<div class="form-group col-md-6">
 									<label>Start Date</label>
 									<input type="text" class="form-control" name="contFrom" id="contFrom" />
@@ -226,6 +231,65 @@ if(isset($_GET['id'])) {
 							</form>
 						</div>
 					</div>
+
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Loan History</h3>
+						</div>
+						<div class="box-body">
+							<div id="loanHistory">
+								<table id="example2" class="table table-bordered table-hover">
+									<thead>
+										<th>From Team</th>
+										<th>To Team</th>
+										<th>Start Date</th>
+										<th>End Date</th>
+									</thead>
+									<tbody>
+									<?php if(is_array($loans))
+									foreach($loans as $loan):?>
+									<tr>
+										<td><?php echo Team::find_by_id($loan->fromteam)->name;?></td>
+										<td><?php echo Team::find_by_id($loan->toteam)->name;?></td>
+										<td><?php echo strftime("%d %b %Y",$loan->start);?></td>
+										<td><?php echo strftime("%d %b %Y",$loan->end);?></td>
+									</tr>
+									<?php endforeach;?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<?php if(isset($contractTeam) && !isset($loanTeam)):?>
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Add Loan</h3>
+						</div>
+						<div class="box-body">
+							<form method="POST">
+								<div class="form-group">
+									<label>To Team</label>
+									<select class="form-control" name="toteam">
+									<?php if(is_array($teams))
+									foreach($teams as $team): ?>
+									<option value="<?php echo $team->id;?>"><?php echo $team->name;?> </option>
+								<?php endforeach;?>
+									</select>
+								</div>
+								<div class="form-group col-md-6">
+									<label>Start date</label>
+									<input type="text" name="loanFrom" id="loanFrom" class="form-control" />
+								</div>
+								<div class="form-group col-md-6">
+									<label>End date</label>
+									<input type="text" name="loanTo" id="loanTo" class="form-control"/>
+								</div>
+						 
+								<input type="submit" value="Add Loan" class="btn btn-primary" />
+							</form>
+						</div>
+					</div>
+					<?php endif;?>
 
 					<div class="box box-primary">
 						<div class="box-header with-border">
@@ -252,7 +316,7 @@ if(isset($_GET['id'])) {
 							</div>
 						</div>
 					</div>
-
+					
 					<div class="box box-primary">
 						<div class="box-header with-border">
 							<h3 class="box-title">New Insurance</h3>
@@ -304,62 +368,6 @@ if(isset($_GET['id'])) {
 									<input type="text" class="form-control" name="visaTo" id="visaTo" /><br/>
 									<input type="submit" class="btn btn-primary" value="Add Visa" />
 								</div>
-							</form>
-						</div>
-					</div>
-
-					<div class="box box-primary">
-						<div class="box-header with-border">
-							<h3 class="box-title">Loan History</h3>
-						</div>
-						<div class="box-body">
-							<div id="loanHistory">
-								<table id="example2" class="table table-bordered table-hover">
-									<thead>
-										<th>Team</th>
-										<th>Start Date</th>
-										<th>End Date</th>
-									</thead>
-									<tbody>
-									<?php if(is_array($loans))
-									foreach($loans as $loan):?>
-									<tr>
-										<td><?php echo Team::find_by_id($loan->team)->name;?></td>
-										<td><?php echo strftime("%d %b %Y",$loan->start);?></td>
-										<td><?php echo strftime("%d %b %Y",$loan->end);?></td>
-									</tr>
-									<?php endforeach;?>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-
-					<div class="box box-primary">
-						<div class="box-header with-border">
-							<h3 class="box-title">Add Loan</h3>
-						</div>
-						<div class="box-body">
-							<form method="POST">
-								<div class="form-group">
-									<label>Team</label>
-									<select class="form-control" name="team">
-									<?php if(is_array($teams))
-									foreach($teams as $team): ?>
-									<option value="<?php echo $team->id;?>"><?php echo $team->name;?> </option>
-								<?php endforeach;?>
-									</select>
-								</div>
-								<div class="form-group col-md-6">
-									<label>Start date</label>
-									<input type="text" name="loanFrom" id="loanFrom" class="form-control" />
-								</div>
-								<div class="form-group col-md-6">
-									<label>End date</label>
-									<input type="text" name="loanTo" id="loanTo" class="form-control"/>
-								</div>
-						 
-								<input type="submit" value="Add Loan" class="btn btn-primary" />
 							</form>
 						</div>
 					</div>
