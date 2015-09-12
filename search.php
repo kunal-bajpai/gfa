@@ -9,13 +9,18 @@ if(sizeof($_POST)>0){
 	if($_POST['last_name']!='') $conds[] = "last_name = '{$_POST['last_name']}'";
 	if($_POST['gfa_lic_num']!='') $conds[] = "gfa_lic_num = '{$_POST['gfa_lic_num']}'";
 	if($_POST['nat']!='') $conds[] = "nat = '{$_POST['nat']}'";
-	if($_POST['dob']!='') $conds[] = "dob = '{$_POST['dob']}'";
+	if($_POST['dob']!='') $conds[] = "dob = ".strtotime($_POST['dob']);
 	if($_POST['village']!=0) $conds[] = "village = {$_POST['village']}";
 	if($_POST['category']!=-1) $conds[] = "category = {$_POST['category']}";
 	if(count($conds)>0)
 		$players = Player::find_by_sql("SELECT * FROM players WHERE ".implode(' AND ', $conds));
 	else
 		$players = Player::find_all();
+	if($_POST['team']!=0)
+		if(is_array($players))
+			foreach($players as $player)
+				if($player->find_current_team()!=$_POST['team'])
+					unset($player);
 }
 ?>
 <html>
@@ -131,7 +136,7 @@ if(sizeof($_POST)>0){
 						</div>
 
 						<div class="form-group col-md-4">
-							<label>Village*</label>
+							<label>Village</label>
 							<select name="village" class="form-control">
 								<option value=0>Any</option>
 								<?php if(is_array($villages))
@@ -140,6 +145,18 @@ if(sizeof($_POST)>0){
 								<?php endforeach;?>
 							</select><br/>
 						</div>
+						
+						<div class="form-group col-md-4">
+							<label>Team</label>
+							<select name="team" class="form-control">
+								<option value=0>Any</option>
+								<?php if(is_array($teams))
+								foreach($teams as $team): ?>
+								<option value="<?php echo $team->id;?>"><?php echo $team->name;?> </option>
+								<?php endforeach;?>
+							</select><br/>
+						</div>
+						
 						<div class="form-group col-md-4">
 							<label>Category</label>
 							<select id="category" name="category" class="form-control">

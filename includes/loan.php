@@ -2,9 +2,10 @@
 	class Loan extends DatabaseObject {
 		protected static $tableName = "loans";
 		
-		public function set($playerId, $teamId, $from, $to) {
+		public function set($playerId, $fromTeamId, $toTeamId, $from, $to) {
 			$this->player = $playerId;
-			$this->team = $teamId;
+			$this->fromteam = $fromTeamId;
+			$this->toteam = $toTeamId;
 			$this->start = $from;
 			$this->end = $to;
 		}

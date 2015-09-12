@@ -9,7 +9,7 @@
 		$player->save();
 		if($player->category==1){
 			$contract = new Contract();
-			$contract->set($player->id, strtotime($_POST['contFrom']), strtotime($_POST['contTo']));
+			$contract->set($player->id, $_POST['team'], strtotime($_POST['contFrom']), strtotime($_POST['contTo']));
 			$contract->save();
 			$ins = new Insurance();
 			$ins->set($player->id, strtotime($_POST['insTo']));
@@ -58,12 +58,6 @@
 						<option value="<?php echo $village->id;?>"><?php echo $village->name;?> </option>
 					<?php endforeach;?>
 			</select><br/>
-			Team* <select name="team">
-			<?php if(is_array($teams))
-					foreach($teams as $team): ?>
-						<option value="<?php echo $team->id;?>"><?php echo $team->name;?> </option>
-					<?php endforeach;?>
-			</select><br/>
 			Telephone (residence) <input type="text" name="ph_res"/><br/>
 			Telephone (office) <input type="text" name="ph_off"/><br/>
 			Mobile number <input type="text" name="mob"/><br/>
@@ -74,6 +68,12 @@
 				<option value=1>Non-amateur</option>
 			</select><br/>
 			<div id="nonAmat" style="display:none">
+				Team <select name="team">
+					<?php if(is_array($teams))
+						foreach($teams as $team): ?>
+							<option value="<?php echo $team->id;?>"><?php echo $team->name;?> </option>
+						<?php endforeach;?>
+				</select><br/>
 				Date contract registered <input type="text" id="contractFrom" name="contFrom"/><br/>
 				Contract valid until <input type="text" id="contractTo" name="contTo"/><br/>
 				Visa for stay in India valid upto <input type="text" id="visaTo" name="visaTo"/><br/>
@@ -87,6 +87,7 @@
 		document.getElementById("category").onchange = function() {
 			if(this.value==1){
 				document.getElementById("nonAmat").style.display = "block";
+				document.getElementById("team").required = true;
 				document.getElementById("contractFrom").required = true;
 				document.getElementById("contractTo").required = true;
 				document.getElementById("insTo").required = true;
@@ -94,6 +95,7 @@
 			}
 			else{
 				document.getElementById("nonAmat").style.display = "none";
+				document.getElementById("team").required = false;
 				document.getElementById("contractFrom").required = false;
 				document.getElementById("contractTo").required = false;
 				document.getElementById("insTo").required = false;
